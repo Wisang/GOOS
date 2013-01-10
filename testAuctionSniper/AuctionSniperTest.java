@@ -19,6 +19,7 @@ public class AuctionSniperTest {
 	private final AuctionSniper sniper = new AuctionSniper(auction, sniperListener);
 	
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void bidsHigherAndReportBiddingWhenNewPriceArrives() throws Exception {
 		final int price = 1001;
@@ -31,6 +32,7 @@ public class AuctionSniperTest {
 		sniper.currentPrice(price, increment);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void reportLostWhenAuctionCloses() throws Exception {
 		context.checking(new Expectations() {{

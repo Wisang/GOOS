@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 @RunWith(JMock.class)
 public class JMockExercise {
 	Mockery context = new JUnit4Mockery();
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSayGreeting() throws Exception {
 		final GreetingTime gt = context.mock(GreetingTime.class); 
