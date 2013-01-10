@@ -7,5 +7,3 @@ public interface Auction {
 	public void join();
 
 }
-
-// to check commit
