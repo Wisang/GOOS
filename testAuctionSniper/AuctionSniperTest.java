@@ -1,6 +1,7 @@
 package testAuctionSniper;
 
 import org.jmock.Expectations;
+import org.jmock.States;
 
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -22,9 +23,37 @@ public class AuctionSniperTest {
 
 	private final AuctionSniper sniper = new AuctionSniper(auction,
 			sniperListener);
+	private final States sniperState = context.states("sniper");
+	
+	@Test 
+	public void reportsWonIfAuctionClosesWhenWinning() {
+	  context.checking(new Expectations() {{
+	    ignoring(auction);
+	    allowing(sniperListener).sniperWinning();  then(sniperState.is("winning"));
+
+	    atLeast(1).of(sniperListener).sniperWon(); when(sniperState.is("winning"));
+	  }});
+	  sniper.currentPrice(123, 45, PriceSource.FromSniper);
+	  sniper.auctionClosed();
+	}
+	
+	@Test 
+	public void reportsLostIfAuctionClosesWhenBidding() {
+	    context.checking(new Expectations() {{
+	      ignoring(auction); 
+	      allowing(sniperListener).sniperBidding();
+	                              then(sniperState .is("bidding")); 
+
+	      atLeast(1).of(sniperListener).sniperLost();
+	                              when(sniperState.is("bidding")); 
+	    }});
+
+	    sniper.currentPrice(123, 45, PriceSource.FromOtherBidder); 
+	    sniper.auctionClosed();
+	  }
 
 	@Test
-	public void reportsIsWinningWhenCurrentPriceComesFromSniper() throws Exception {
+	public void reportsIsWinningWhenCurrentPriceComesFromSniper() {
 		context.checking(new Expectations() {
 			{
 				atLeast(1).of(sniperListener).sniperWinning();
@@ -52,13 +81,12 @@ public class AuctionSniperTest {
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void reportLostWhenAuctionCloses() throws Exception {
+	public void reportLostWhenAuctionClosesImmediately() throws Exception {
 		context.checking(new Expectations() {
 			{
 				one(sniperListener).sniperLost();
 			}
 		});
-
 		sniper.auctionClosed();
 	}
 }
