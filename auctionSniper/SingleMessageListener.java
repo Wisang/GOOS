@@ -23,4 +23,8 @@ public class SingleMessageListener implements MessageListener {
 		assertThat("Message", messages, is(notNullValue()));
 		assertThat(message.getBody(), messageMatcher);
 	}
+	
+	public int getMessage() {
+		return messages.size();
+	}
 }
