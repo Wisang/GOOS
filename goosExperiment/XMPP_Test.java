@@ -64,6 +64,7 @@ public class XMPP_Test {
 		Message message = new Message();
 		messageListener.processMessage(currentChat, message);
 		System.out.println(((SingleMessageListener) messageListener).getMessage());
+		application.stop();
 	}
 	
 	@After
