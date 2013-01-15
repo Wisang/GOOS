@@ -52,7 +52,7 @@ public class Main {
 		chat.addMessageListener(
 				new AuctionMessageTranslator( //new AuctionSniper(auction, this)));
 				connection.getUser(),
-				new AuctionSniper(auction, new SniperStateDisplayer())));
+				new AuctionSniper(itemId, auction, new SniperStateDisplayer())));
 		auction.join();
 	}
 

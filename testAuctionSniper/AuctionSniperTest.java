@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import auctionSniper.Auction;
 import auctionSniper.AuctionSniper;
 import auctionSniper.SniperListener;
+import auctionSniper.SniperState;
 
 import static auctionSniper.AuctionEventListener.PriceSource;
 
@@ -21,8 +22,9 @@ public class AuctionSniperTest {
 			.mock(SniperListener.class);
 	private Auction auction = context.mock(Auction.class);
 
-	private final AuctionSniper sniper = new AuctionSniper(auction,
-			sniperListener);
+	final String ITEM_ID = "item-54321"; //wseom
+	private final AuctionSniper sniper = new AuctionSniper(ITEM_ID, auction,
+			sniperListener); //wseom
 	private final States sniperState = context.states("sniper");
 	
 	@Test 
@@ -41,8 +43,8 @@ public class AuctionSniperTest {
 	public void reportsLostIfAuctionClosesWhenBidding() {
 	    context.checking(new Expectations() {{
 	      ignoring(auction); 
-	      allowing(sniperListener).sniperBidding();
-	                              then(sniperState .is("bidding")); 
+	      allowing(sniperListener).sniperBidding(with(any(SniperState.class))); //wseom
+	                              then(sniperState.is("bidding")); 
 
 	      atLeast(1).of(sniperListener).sniperLost();
 	                              when(sniperState.is("bidding")); 
@@ -69,14 +71,17 @@ public class AuctionSniperTest {
 			throws Exception {
 		final int price = 1001;
 		final int increment = 25;
+		final int bid = price + increment;
+		System.out.println(sniper.getItemId());
+		
 		context.checking(new Expectations() {
 			{
-				one(auction).bid(price + increment);
-				atLeast(1).of(sniperListener).sniperBidding();
+				one(auction).bid(bid);
+				atLeast(1).of(sniperListener).sniperBidding(new SniperState(sniper.getItemId(), price, bid));
 			}
 		});
 
-		sniper.currentPrice(price, increment, PriceSource.FromOtherBidder ); //wseom
+		sniper.currentPrice(price, increment, PriceSource.FromOtherBidder );
 	}
 
 	@SuppressWarnings("deprecation")
