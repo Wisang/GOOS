@@ -61,8 +61,6 @@ public class AuctionSniperTest {
 	public void reportsIsWinningWhenCurrentPriceComesFromSniper() {
 		context.checking(new Expectations() {
 			{
-				
-				
 				atLeast(1).of(sniperListener).sniperWinning();
 			}
 		});

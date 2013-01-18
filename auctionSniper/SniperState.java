@@ -22,4 +22,19 @@ public class SniperState {
 		this.lastPrice = lastPrice;
 		this.lastBid = lastBid;
 	}
+	
+	@Override
+	public String toString() {
+		return itemId + "-" + lastPrice + "-" + lastBid;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if(null == other)
+			return false;
+		
+		return this.itemId.equals(((SniperState)other).itemId)
+				&& this.lastBid == ((SniperState)other).lastBid
+				&& this.lastPrice == ((SniperState)other).lastPrice;
+	}
 }
