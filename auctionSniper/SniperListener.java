@@ -11,5 +11,4 @@ public interface SniperListener extends EventListener{
 	void sniperWinning();
 
 	void sniperWon();
-
 }

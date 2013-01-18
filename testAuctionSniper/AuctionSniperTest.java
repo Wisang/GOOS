@@ -1,5 +1,7 @@
 package testAuctionSniper;
 
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
 import org.jmock.Expectations;
 import org.jmock.States;
 
@@ -12,6 +14,7 @@ import auctionSniper.Auction;
 import auctionSniper.AuctionSniper;
 import auctionSniper.SniperListener;
 import auctionSniper.SniperState;
+import static org.hamcrest.Matchers.equalTo;
 
 import static auctionSniper.AuctionEventListener.PriceSource;
 
@@ -58,6 +61,8 @@ public class AuctionSniperTest {
 	public void reportsIsWinningWhenCurrentPriceComesFromSniper() {
 		context.checking(new Expectations() {
 			{
+				
+				
 				atLeast(1).of(sniperListener).sniperWinning();
 			}
 		});
@@ -67,7 +72,7 @@ public class AuctionSniperTest {
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void bidsHigherAndReportBiddingWhenNewPriceArrives()
+	public void bidsHigherAndReportsBiddingWhenNewPriceArrives()
 			throws Exception {
 		final int price = 1001;
 		final int increment = 25;
@@ -77,7 +82,7 @@ public class AuctionSniperTest {
 		context.checking(new Expectations() {
 			{
 				one(auction).bid(bid);
-				atLeast(1).of(sniperListener).sniperBidding(new SniperState(sniper.getItemId(), price, bid));
+				atLeast(1).of(sniperListener).sniperBidding((new SniperState(sniper.getItemId(), price, bid)));
 			}
 		});
 

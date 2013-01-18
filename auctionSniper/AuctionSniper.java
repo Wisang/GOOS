@@ -1,6 +1,5 @@
 package auctionSniper;
 
-import testAuctionSniper.FakeAuctionServer;
 
 public class AuctionSniper implements AuctionEventListener{
 	private final SniperListener sniperListener;
@@ -29,11 +28,11 @@ public class AuctionSniper implements AuctionEventListener{
 	public void currentPrice(int price, int increment, PriceSource priceSource) {
 		isWinning = priceSource == PriceSource.FromSniper;
 	    if (isWinning) {
-	      sniperListener.sniperWinning();
+	    	sniperListener.sniperWinning();
 	    } else {
 	      int bid = price + increment;
 	      auction.bid(bid);
-	      sniperListener.sniperBidding(new SniperState(itemId, price, bid)); //wseom
+	      sniperListener.sniperBidding(new SniperState(itemId, price, bid));
 	    }
 	}
 }
