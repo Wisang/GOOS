@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import auctionSniper.Auction;
 import auctionSniper.AuctionSniper;
 import auctionSniper.SniperListener;
+import auctionSniper.SniperSnapshot;
 import auctionSniper.SniperState;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -46,7 +47,7 @@ public class AuctionSniperTest {
 	public void reportsLostIfAuctionClosesWhenBidding() {
 	    context.checking(new Expectations() {{
 	      ignoring(auction); 
-	      allowing(sniperListener).sniperBidding(with(any(SniperState.class))); //wseom
+	      allowing(sniperListener).sniperBidding(with(any(SniperSnapshot.class))); //wseom
 	                              then(sniperState.is("bidding")); 
 
 	      atLeast(1).of(sniperListener).sniperLost();
@@ -80,7 +81,8 @@ public class AuctionSniperTest {
 		context.checking(new Expectations() {
 			{
 				one(auction).bid(bid);
-				atLeast(1).of(sniperListener).sniperBidding((new SniperState(sniper.getItemId(), price, bid)));
+				atLeast(1).of(sniperListener).sniperBidding((new SniperSnapshot(sniper.getItemId(), 
+						price, bid, SniperState.BIDDING)));
 			}
 		});
 

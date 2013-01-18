@@ -20,8 +20,7 @@ public class ApplicationRunner {
 			@Override
 			public void run() {
 				try {
-					Main.main(XMPP_HOSTNAME, SNIPER_ID, SNIPER_PASSWORD,
-							auction.getItemId());
+					Main.main(XMPP_HOSTNAME, SNIPER_ID, SNIPER_PASSWORD, itemId);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

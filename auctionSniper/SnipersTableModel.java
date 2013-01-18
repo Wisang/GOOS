@@ -5,9 +5,9 @@ import javax.swing.table.AbstractTableModel;
 public class SnipersTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
-	private SniperState STARTING_UP = new SniperState("", 0, 0);
+	private SniperSnapshot STARTING_UP = new SniperSnapshot("", 0, 0, SniperState.JOINING); // to be cor
 	private String statusText = MainWindow.STATUS_JOINING;
-	private SniperState sniperState = STARTING_UP;
+	private SniperSnapshot sniperState = STARTING_UP;
 
 	private String state;
 	private static String[] STATUS_TEXT = { MainWindow.STATUS_JOINING,
@@ -32,7 +32,7 @@ public class SnipersTableModel extends AbstractTableModel {
 			return sniperState.lastPrice;
 		case LAST_BID:
 			return sniperState.lastBid;
-		case SNIPER_STATUS:
+		case SNIPER_STATE:
 			return statusText;
 		default:
 			throw new IllegalArgumentException("No column at " + columnIndex);
@@ -44,7 +44,7 @@ public class SnipersTableModel extends AbstractTableModel {
 		fireTableRowsUpdated(0, 0);
 	}
 
-	public void sniperStatusChanged(SniperState newSniperState, 
+	public void sniperStatusChanged(SniperSnapshot newSniperState, 
             String newStatusText) {
 		sniperState = newSniperState;
 	    statusText = newStatusText;

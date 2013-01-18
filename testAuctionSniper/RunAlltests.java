@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({AuctionSniperEndToEndTest.class, AuctionMessageTranslatorTest.class, AuctionSniperTest.class
-	,SnipersTableModelTest.class})
+	,SnipersTableModelTest.class, SniperStateTest.class})
 public class RunAlltests {
 
 }

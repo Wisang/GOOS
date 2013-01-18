@@ -23,8 +23,6 @@ public class AuctionSniperDriver extends JFrameDriver {
 	@SuppressWarnings("unchecked")
 	public void showsSniperStatus(String itemId, int lastPrice, int lastBid,
 			String statusText) {
-		// new JLabelDriver(this,
-		// named(Main.SNIPER_STATUS_NAME)).hasText(equalTo(statusText));
 		// new JTableDriver(this).hasCell(withLabelText(equalTo(statusText)));
 		JTableDriver table = new JTableDriver(this);
 		table.hasRow(IterableComponentsMatcher.matching(withLabelText(itemId),
